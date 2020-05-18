@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,13 +21,22 @@ import com.bolsadeideas.springboot.web.models.Usuario;
 @RequestMapping("/app")
 public class IndexController {
 	
+	@Value("${texto.indexcontroller.index.titulo}")
+	private String textoIndex;
+	
+	@Value("${texto.indexcontroller.perfil.titulo}")
+	private String textoPerfil;
+	
+	@Value("${texto.indexcontroller.listar.titulo}")
+	private String textoListar;
+	
 //	@RequestMapping(value = "/index",method = RequestMethod.GET)
 //	@GetMapping(value = "/index")
 	@GetMapping({"/index","/","/home"})
 	//ModelMap model -- Model model -- Map<String,Object> map -- ModelAndView mv
 	public String index(Model model) {
 		//map.put("titulo","Hola Spring Framework usando Map");
-		model.addAttribute("titulo","Hola Spring");
+		model.addAttribute("titulo",textoIndex);
 		return "index";
 //		mv.addObject("titulo","Hola Spring Framework usando ModelAndBiew");
 //		mv.setViewName("index");
@@ -42,7 +52,7 @@ public class IndexController {
 		usuario.setEmail("abreguwalter0709@gmail.com");
 		
 		model.addAttribute("usuario",usuario);
-		model.addAttribute("titulo","Perfil del usuario : ".concat(usuario.getNombre()));
+		model.addAttribute("titulo",textoPerfil.concat(usuario.getNombre()));
 		
 		return "perfil";
 	}
@@ -51,7 +61,7 @@ public class IndexController {
 	public String listar(Model model) {
 		
 		
-		model.addAttribute("titulo","Lista de usuarios");
+		model.addAttribute("titulo",textoListar);
 //		model.addAttribute("usuarios",usuarios);
 		
 		return "listar";
